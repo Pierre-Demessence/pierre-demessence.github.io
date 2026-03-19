@@ -1,0 +1,54 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__inner container">
+    <p class="footer__copy">&copy; {currentYear} Pierre Demessence</p>
+    <div class="footer__links">
+      <a href="https://github.com/Pierre-Demessence" target="_blank" rel="noopener noreferrer">GitHub <span class="sr-only">(opens in new tab)</span></a>
+      <span class="footer__sep" aria-hidden="true">&middot;</span>
+      <a href="https://linkedin.com/in/pierre-demessence" target="_blank" rel="noopener noreferrer">LinkedIn <span class="sr-only">(opens in new tab)</span></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: auto;
+    padding: var(--space-lg) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .footer__copy {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .footer__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.875rem;
+  }
+
+  .footer__links a {
+    color: var(--color-text-muted);
+  }
+
+  .footer__links a:hover {
+    color: var(--color-accent);
+  }
+
+  .footer__sep {
+    color: var(--color-border);
+  }
+</style>

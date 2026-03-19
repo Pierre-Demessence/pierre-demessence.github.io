@@ -1,0 +1,288 @@
+---
+---
+
+<div class="theme-dropdown" id="theme-dropdown" data-active-theme="system">
+  <button
+    class="theme-dropdown__trigger"
+    type="button"
+    id="theme-toggle"
+    aria-haspopup="listbox"
+    aria-controls="theme-menu"
+    aria-expanded="false"
+    aria-label="Theme: System"
+    title="Theme: System"
+  >
+    <svg class="theme-dropdown__icon" data-theme-icon="light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="theme-dropdown__icon" data-theme-icon="dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="theme-dropdown__icon" data-theme-icon="system" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+  </button>
+  <ul class="theme-dropdown__menu" role="listbox" aria-label="Select theme" id="theme-menu">
+    <li role="option" data-theme-value="light" tabindex="-1" aria-selected="false">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      Light
+    </li>
+    <li role="option" data-theme-value="dark" tabindex="-1" aria-selected="false">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      Dark
+    </li>
+    <li role="option" data-theme-value="system" tabindex="-1" aria-selected="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      System
+    </li>
+  </ul>
+</div>
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = 'theme-preference';
+    var THEMES = ['light', 'dark', 'system'];
+    var LABELS = { light: 'Light', dark: 'Dark', system: 'System' };
+    var THEME_COLORS = { light: '#FAFAF9', dark: '#0F172A' };
+
+    function getStoredTheme() {
+      try {
+        var stored = localStorage.getItem(STORAGE_KEY);
+        if (stored && THEMES.indexOf(stored) !== -1) return stored;
+      } catch (e) {}
+      return 'system';
+    }
+
+    function getResolvedTheme(preference) {
+      if (preference === 'system') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      return preference;
+    }
+
+    function applyTheme(preference) {
+      var resolved = getResolvedTheme(preference);
+      document.documentElement.setAttribute('data-theme', resolved);
+      document.documentElement.style.colorScheme = resolved;
+
+      var themeColorMeta = document.getElementById('theme-color-meta');
+      if (themeColorMeta) themeColorMeta.setAttribute('content', THEME_COLORS[resolved]);
+
+      var dropdown = document.getElementById('theme-dropdown');
+      if (dropdown) dropdown.setAttribute('data-active-theme', preference);
+
+      var trigger = document.getElementById('theme-toggle');
+      if (trigger) {
+        var label = 'Theme: ' + LABELS[preference];
+        trigger.setAttribute('aria-label', label);
+        trigger.setAttribute('title', label);
+      }
+
+      var menu = document.getElementById('theme-menu');
+      if (menu) {
+        menu.querySelectorAll('[data-theme-value]').forEach(function (el) {
+          var isSelected = el.getAttribute('data-theme-value') === preference;
+          el.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+          el.setAttribute('tabindex', isSelected ? '0' : '-1');
+        });
+      }
+    }
+
+    function selectTheme(value) {
+      try { localStorage.setItem(STORAGE_KEY, value); } catch (e) {}
+      applyTheme(value);
+      closeMenu();
+    }
+
+    function closeMenu() {
+      var dropdown = document.getElementById('theme-dropdown');
+      var trigger = document.getElementById('theme-toggle');
+      if (dropdown) dropdown.classList.remove('theme-dropdown--open');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    function getOptions() {
+      var menu = document.getElementById('theme-menu');
+      return menu ? Array.from(menu.querySelectorAll('[data-theme-value]')) : [];
+    }
+
+    function focusOption(index) {
+      var options = getOptions();
+      if (!options.length) return;
+      var safeIndex = ((index % options.length) + options.length) % options.length;
+      options[safeIndex].focus();
+    }
+
+    function toggleMenu() {
+      var dropdown = document.getElementById('theme-dropdown');
+      var trigger = document.getElementById('theme-toggle');
+      if (!dropdown || !trigger) return;
+      var isOpen = dropdown.classList.toggle('theme-dropdown--open');
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    applyTheme(getStoredTheme());
+
+    document.addEventListener('DOMContentLoaded', function () {
+      applyTheme(getStoredTheme());
+
+      var trigger = document.getElementById('theme-toggle');
+      if (trigger) {
+        trigger.addEventListener('click', toggleMenu);
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeMenu();
+            return;
+          }
+
+          if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            var dropdown = document.getElementById('theme-dropdown');
+            var isOpen = dropdown && dropdown.classList.contains('theme-dropdown--open');
+            if (!isOpen) toggleMenu();
+
+            var selectedIndex = getOptions().findIndex(function (option) {
+              return option.getAttribute('aria-selected') === 'true';
+            });
+            focusOption(selectedIndex === -1 ? 0 : selectedIndex);
+          }
+        });
+      }
+
+      var menu = document.getElementById('theme-menu');
+      if (menu) {
+        menu.querySelectorAll('[data-theme-value]').forEach(function (option) {
+          option.addEventListener('click', function () {
+            selectTheme(this.getAttribute('data-theme-value'));
+          });
+          option.addEventListener('keydown', function (e) {
+            var options = getOptions();
+            var index = options.indexOf(this);
+
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              selectTheme(this.getAttribute('data-theme-value'));
+              return;
+            }
+
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              focusOption(index + 1);
+              return;
+            }
+
+            if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              focusOption(index - 1);
+              return;
+            }
+
+            if (e.key === 'Home') {
+              e.preventDefault();
+              focusOption(0);
+              return;
+            }
+
+            if (e.key === 'End') {
+              e.preventDefault();
+              focusOption(options.length - 1);
+              return;
+            }
+
+            if (e.key === 'Escape') {
+              e.preventDefault();
+              closeMenu();
+              var trigger = document.getElementById('theme-toggle');
+              if (trigger) trigger.focus();
+            }
+          });
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        var dropdown = document.getElementById('theme-dropdown');
+        if (dropdown && !dropdown.contains(e.target)) closeMenu();
+      });
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (getStoredTheme() === 'system') applyTheme('system');
+    });
+  })();
+</script>
+
+<style>
+  .theme-dropdown {
+    position: relative;
+  }
+
+  .theme-dropdown__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px;
+    width: 2.25rem;
+    height: 2.25rem;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: border-color 0.2s ease;
+  }
+
+  .theme-dropdown__trigger:hover {
+    border-color: var(--color-accent);
+  }
+
+  .theme-dropdown__trigger:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .theme-dropdown__icon {
+    display: none;
+  }
+
+  .theme-dropdown[data-active-theme="light"] .theme-dropdown__icon[data-theme-icon="light"],
+  .theme-dropdown[data-active-theme="dark"] .theme-dropdown__icon[data-theme-icon="dark"],
+  .theme-dropdown[data-active-theme="system"] .theme-dropdown__icon[data-theme-icon="system"] {
+    display: block;
+  }
+
+  .theme-dropdown__menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    list-style: none;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.35rem;
+    min-width: 8rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+  }
+
+  .theme-dropdown--open .theme-dropdown__menu {
+    display: block;
+  }
+
+  .theme-dropdown__menu li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .theme-dropdown__menu li:hover,
+  .theme-dropdown__menu li:focus-visible {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    outline: none;
+  }
+
+  .theme-dropdown__menu li[aria-selected="true"] {
+    color: var(--color-accent);
+  }
+</style>

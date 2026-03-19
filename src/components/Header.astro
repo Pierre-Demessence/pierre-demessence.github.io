@@ -1,0 +1,99 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+];
+---
+
+<header class="header">
+  <nav class="header__nav container" aria-label="Main navigation">
+    <a href="/" class="header__logo">PD</a>
+    <ul class="header__links">
+      {links.map(({ href, label }) => {
+        const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
+        return (
+          <li>
+            <a
+              href={href}
+              class:list={['header__link', { 'header__link--active': isActive }]}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <ThemeToggle />
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--header-height);
+    background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .header__logo {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--color-text);
+    letter-spacing: -0.04em;
+  }
+
+  .header__logo:hover {
+    color: var(--color-accent);
+  }
+
+  .header__links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-md);
+  }
+
+  .header__link {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) 0;
+    position: relative;
+  }
+
+  .header__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width 0.25s ease;
+  }
+
+  .header__link:hover,
+  .header__link--active {
+    color: var(--color-text);
+  }
+
+  .header__link:hover::after,
+  .header__link--active::after {
+    width: 100%;
+  }
+</style>

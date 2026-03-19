@@ -1,0 +1,27 @@
+{
+  "name": "pierre-demessence.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pierre-Demessence/pierre-demessence.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pierre-Demessence/pierre-demessence.github.io/issues"
+  },
+  "homepage": "https://github.com/Pierre-Demessence/pierre-demessence.github.io#readme",
+  "dependencies": {
+    "@astrojs/check": "^0.9.8",
+    "astro": "^6.0.6",
+    "typescript": "^5.9.3"
+  }
+}

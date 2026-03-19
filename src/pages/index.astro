@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const skills = [
+  'TypeScript', 'JavaScript', 'Vue', 'React',
+  'Angular', 'Svelte', 'Node.js', 'C#',
+  'Unity', 'Git', 'AWS', 'Linux',
+  'Docker',
+];
+---
+
+<BaseLayout title="Pierre Demessence — Developer">
+  <Header slot="header" />
+
+  <section class="hero">
+    <div class="hero__inner container">
+      <p class="hero__greeting">Hello, I'm</p>
+      <h1 class="hero__name">Pierre Demessence</h1>
+      <p class="hero__tagline">Software Developer</p>
+      <div class="hero__actions">
+        <a href="/projects" class="btn btn--primary">View Projects</a>
+        <a href="https://github.com/Pierre-Demessence" target="_blank" rel="noopener noreferrer" class="btn btn--outline">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about__inner container">
+      <h2 class="section-title">About</h2>
+      <p class="about__text">
+        I'm a software developer with a strong interest in modern web technologies
+        and game development. I enjoy building products across the stack, from
+        frontend interfaces to backend services, and I also like working with
+        game-focused tools such as C# and Unity. AI is part of my day-to-day
+        workflow as a practical tool for research, iteration, and faster delivery.
+      </p>
+    </div>
+  </section>
+
+  <section class="skills">
+    <div class="skills__inner container">
+      <h2 class="section-title">Skills &amp; Technologies</h2>
+      <ul class="skills__list">
+        {skills.map((skill) => (
+          <li class="skills__tag">{skill}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--space-2xl) 0 var(--space-xl);
+    position: relative;
+  }
+
+  .hero__inner {
+    max-width: 48rem;
+  }
+
+  .hero__greeting {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-accent);
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.03em;
+  }
+
+  .hero__name {
+    margin-bottom: var(--space-xs);
+  }
+
+  .hero__tagline {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .btn--primary {
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-accent-hover);
+    color: white;
+  }
+
+  .btn--outline {
+    border: 1.5px solid var(--color-border);
+    color: var(--color-text);
+  }
+
+  .btn--outline:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .section-title {
+    margin-bottom: var(--space-md);
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 2.5rem;
+    height: 3px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+  }
+
+  .about {
+    padding: var(--space-xl) 0;
+  }
+
+  .about__text {
+    max-width: 40rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+  }
+
+  .skills {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+
+  .skills__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: var(--space-sm);
+  }
+
+  .skills__tag {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+  }
+
+  .skills__tag:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: var(--space-xl) 0 var(--space-lg);
+    }
+
+    .hero__actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+</style>
