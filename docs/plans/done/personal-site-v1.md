@@ -58,12 +58,12 @@ THE SYSTEM SHALL ship zero JavaScript by default (Astro static output).
 ## Subtasks
 
 - [x] Create plan document
-- [ ] Initialize Astro project (package.json, tsconfig, astro.config)
-- [ ] Build BaseLayout + Header + Footer components
-- [ ] Build global CSS with design tokens
-- [ ] Build Home page (Hero + About + Skills)
-- [ ] Build Projects page (ProjectCard grid)
-- [ ] Add GitHub Actions deploy workflow
+- [x] Initialize Astro project (package.json, tsconfig, astro.config)
+- [x] Build BaseLayout + Header + Footer components
+- [x] Build global CSS with design tokens
+- [x] Build Home page (Hero + About + Skills)
+- [x] Build Projects page (ProjectCard grid)
+- [x] Add GitHub Actions deploy workflow
 - [ ] Update README and docs
 - [ ] Build validation
 - [ ] Peer review

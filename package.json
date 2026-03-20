@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Pierre-Demessence/pierre-demessence.github.io#readme",
   "dependencies": {
     "@astrojs/check": "^0.9.8",
+    "@astrojs/sitemap": "^3.7.1",
     "astro": "^6.0.6",
     "typescript": "^5.9.3"
   }

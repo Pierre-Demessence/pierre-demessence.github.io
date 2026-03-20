@@ -2,9 +2,11 @@
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'Personal portfolio of Pierre Demessence — software developer.' } = Astro.props;
+const { title, description = 'Personal portfolio of Pierre Demessence — software developer.', ogImage } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -14,6 +16,21 @@ const { title, description = 'Personal portfolio of Pierre Demessence — softwa
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#FAFAF9" id="theme-color-meta" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />}
+
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,8 +54,9 @@ const { title, description = 'Personal portfolio of Pierre Demessence — softwa
     </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
     <slot name="header" />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <slot name="footer" />
