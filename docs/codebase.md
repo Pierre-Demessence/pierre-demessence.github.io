@@ -23,3 +23,5 @@ src/
 - **Styles**: Global tokens in `src/styles/global.css`, component styles co-located via `<style>` blocks
 - **New pages**: Add a `.astro` file to `src/pages/` and update `Header.astro` nav links
 - **New projects**: Add an entry to `src/data/projects.ts`
+- **Experience data**: Work history and education in `src/data/experience.ts`
+- **Uses data**: Tools and services in `src/data/uses.ts`

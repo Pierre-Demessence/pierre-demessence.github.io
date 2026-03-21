@@ -11,3 +11,6 @@
 | Dark Theme Toggle | Light/dark/system theme switcher persisted in localStorage | Active |
 | SEO Meta Tags | Open Graph, Twitter cards, canonical URLs, and sitemap | Active |
 | Accessibility | Skip-to-content link, ARIA attributes, keyboard navigation | Active |
+| Resume Page | Timeline-style work experience and education history | Active |
+| Uses Page | Categorized list of development tools, software, and services | Active |
+| Custom 404 | Styled error page with navigation back to home | Active |

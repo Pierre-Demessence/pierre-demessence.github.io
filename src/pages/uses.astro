@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { uses } from '../data/uses';
+---
+
+<BaseLayout title="Uses - Pierre Demessence" description="Tools, software, and services Pierre Demessence uses for development.">
+  <Header slot="header" />
+
+  <section class="uses-hero">
+    <div class="container">
+      <h1>Uses</h1>
+      <p class="uses-hero__sub">Tools, software, and services I use for development.</p>
+    </div>
+  </section>
+
+  <section class="uses-section">
+    <div class="container">
+      {uses.map((category) => (
+        <div class="uses-category">
+          <h2 class="uses-category__title">{category.title}</h2>
+          <ul class="uses-list">
+            {category.items.map((item) => (
+              <li class="uses-item">
+                <h3 class="uses-item__name">
+                  {item.url ? (
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                      {item.name} <span class="sr-only">(opens in new tab)</span>
+                    </a>
+                  ) : (
+                    item.name
+                  )}
+                </h3>
+                <p class="uses-item__desc">{item.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .uses-hero {
+    padding: var(--space-2xl) 0 var(--space-lg);
+  }
+
+  .uses-hero h1 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .uses-hero__sub {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .uses-section {
+    padding-bottom: var(--space-xl);
+  }
+
+  .uses-category {
+    margin-bottom: var(--space-xl);
+  }
+
+  .uses-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .uses-category__title {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .uses-list {
+    list-style: none;
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .uses-item {
+    padding: var(--space-md);
+    background-color: var(--color-surface);
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+  }
+
+  .uses-item__name {
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .uses-item__name a {
+    text-decoration: none;
+  }
+
+  .uses-item__desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+</style>

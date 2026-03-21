@@ -25,7 +25,7 @@ export const projects: Project[] = [
   },
   {
     title: 'CareGame',
-    date: '2017–2025',
+    date: '2017-2025',
     description: 'A professional cloud gaming web app for playing Android games streamed from a computer. I built the initial streaming prototype, then developed the web stack including the backend, CMS, and customer-facing web app.',
     tags: ['Cloud Gaming', 'Web App', 'CMS', 'Backend'],
     article: 'https://www.hardwarezone.com.sg/mobile/telco/tech-news-starhub-mobile-gaming-caregame-onmobile-price',

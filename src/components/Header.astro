@@ -1,11 +1,13 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
+import ThemeToggle from "./ThemeToggle.astro";
 
 const currentPath = Astro.url.pathname;
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/resume", label: "Resume" },
+  // { href: '/uses', label: 'Uses' },
 ];
 ---
 
@@ -26,20 +28,27 @@ const links = [
     </button>
     <div class="header__menu" id="nav-menu">
       <ul class="header__links">
-        {links.map(({ href, label }) => {
-          const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
-          return (
-            <li>
-              <a
-                href={href}
-                class:list={['header__link', { 'header__link--active': isActive }]}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {label}
-              </a>
-            </li>
-          );
-        })}
+        {
+          links.map(({ href, label }) => {
+            const isActive =
+              currentPath === href ||
+              (href !== "/" && currentPath.startsWith(href));
+            return (
+              <li>
+                <a
+                  href={href}
+                  class:list={[
+                    "header__link",
+                    { "header__link--active": isActive },
+                  ]}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })
+        }
       </ul>
       <ThemeToggle />
     </div>
@@ -47,19 +56,24 @@ const links = [
 </header>
 
 <script>
-  const toggle = document.getElementById('nav-toggle');
-  const menu = document.getElementById('nav-menu');
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("nav-menu");
 
-  toggle?.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    menu?.classList.toggle('header__menu--open');
+  toggle?.addEventListener("click", () => {
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    menu?.classList.toggle("header__menu--open");
   });
 
-  document.addEventListener('click', (e) => {
-    if (toggle && menu && !toggle.contains(e.target as Node) && !menu.contains(e.target as Node)) {
-      toggle.setAttribute('aria-expanded', 'false');
-      menu.classList.remove('header__menu--open');
+  document.addEventListener("click", (e) => {
+    if (
+      toggle &&
+      menu &&
+      !toggle.contains(e.target as Node) &&
+      !menu.contains(e.target as Node)
+    ) {
+      toggle.setAttribute("aria-expanded", "false");
+      menu.classList.remove("header__menu--open");
     }
   });
 </script>
@@ -109,7 +123,7 @@ const links = [
   }
 
   .header__link::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
@@ -147,7 +161,9 @@ const links = [
     height: 2px;
     background-color: var(--color-text);
     border-radius: 2px;
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
   }
 
   .header__burger[aria-expanded="true"] .header__burger-line:nth-child(1) {
